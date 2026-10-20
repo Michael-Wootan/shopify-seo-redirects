@@ -1,0 +1,19 @@
+{
+  "name": "shopify-seo-redirects",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Shopify Admin API scripts for SEO consolidation: bulk 301 redirects, article noindex metafields, and thin-collection seo.hidden.",
+  "engines": { "node": ">=18" },
+  "scripts": {
+    "redirects:preview": "node src/shopify-redirects.js",
+    "redirects:apply": "node src/shopify-redirects.js --apply",
+    "redirects:verify": "node src/shopify-redirects.js --verify",
+    "noindex:preview": "node src/shopify-noindex.js",
+    "noindex:apply": "node src/shopify-noindex.js --apply",
+    "collections:preview": "node src/noindex-thin-collections.js",
+    "collections:apply": "node src/noindex-thin-collections.js --apply"
+  },
+  "dependencies": {
+    "dotenv": "^16.4.5"
+  }
+}

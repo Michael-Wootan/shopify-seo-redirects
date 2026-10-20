@@ -1,0 +1,22 @@
+[
+  {
+    "path": "/blogs/news/beginners-guide-to-cold-brew-2025",
+    "target": "/blogs/news/cold-brew-guide",
+    "reason": "Older duplicate competing for the same query; canonical ranks better."
+  },
+  {
+    "path": "/blogs/news/how-to-store-coffee-beans-the-ultimate-guide",
+    "target": "/blogs/news/coffee-storage-shelf-life-guide",
+    "reason": "Same intent, weaker position, 0 clicks over 90 days."
+  },
+  {
+    "path": "/products/sample-product-copy",
+    "target": "/products/sample-product",
+    "reason": "Shopify -copy duplicate product page."
+  },
+  {
+    "path": "/collections/wholesale-sample-collection",
+    "target": "/collections/sample-collection",
+    "reason": "Duplicate collection, 0 clicks."
+  }
+]

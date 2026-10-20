@@ -1,0 +1,9 @@
+node_modules/
+.env
+*.local.json
+redirects.json
+noindex.json
+.noindexed-collections.json
+.env.*
+!.env.example
+.DS_Store

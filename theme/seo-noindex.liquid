@@ -1,0 +1,74 @@
+{% comment %}
+  ═══════════════════════════════════════════════════════════════
+  SEO NOINDEX SNIPPET — Add to theme.liquid inside <head> tag
+  ═══════════════════════════════════════════════════════════════
+  Purpose: Prevents Google from indexing pages that waste crawl budget.
+  This single snippet handles the noindex cases that redirects can't:
+
+  1. Blog articles flagged via seo.noindex metafield (set by shopify-noindex.js)
+  2. Blog tag archive pages (/blogs/<blog>/tagged/*)
+  3. Paginated pages (page 2+)
+  4. Search results, cart, account, checkout pages
+  5. Collection filter/sort parameter URLs
+  6. Product variant parameter URLs
+
+  Collections hidden via seo.hidden (noindex-thin-collections.js) need no
+  snippet: Shopify handles that metafield natively.
+
+  INSTALLATION:
+  1. Shopify Admin → Online Store → Themes → Edit Code
+  2. Open layout/theme.liquid
+  3. Paste this snippet AFTER the existing <meta> tags but BEFORE </head>
+  4. Save and verify on the storefront (view source, search for "noindex")
+
+  To revert: remove this snippet from theme.liquid.
+  ═══════════════════════════════════════════════════════════════
+{% endcomment %}
+
+{% comment %} ── 1. Article-level noindex via metafield ── {% endcomment %}
+{% if template contains 'article' %}
+  {% if article.metafields.seo.noindex == 'true' %}
+    <meta name="robots" content="noindex, follow">
+  {% endif %}
+{% endif %}
+
+{% comment %} ── 2. Blog tag archive pages (always noindex) ── {% endcomment %}
+{% if current_tags %}
+  <meta name="robots" content="noindex, follow">
+{% endif %}
+
+{% comment %} ── 3. Paginated pages — page 2+ (always noindex) ── {% endcomment %}
+{% if current_page > 1 %}
+  <meta name="robots" content="noindex, follow">
+{% endif %}
+
+{% comment %} ── 4. Search, cart, account pages (always noindex) ── {% endcomment %}
+{% if template contains 'search' or template == 'cart' %}
+  <meta name="robots" content="noindex, follow">
+{% endif %}
+{% if request.path contains '/account' or request.path contains '/checkout' %}
+  <meta name="robots" content="noindex, nofollow">
+{% endif %}
+
+{% comment %} ── 5. Collection filter/sort parameter URLs ── {% endcomment %}
+{% comment %}
+  When someone uses collection filters (?filter.v.price=, ?sort_by=, etc.)
+  or collection + tag combos, noindex the result. The canonical collection
+  page is all Google needs.
+{% endcomment %}
+{% if template contains 'collection' %}
+  {% assign has_params = false %}
+  {% if request.url contains '?' %}
+    {% assign has_params = true %}
+  {% endif %}
+  {% if has_params %}
+    <meta name="robots" content="noindex, follow">
+  {% endif %}
+{% endif %}
+
+{% comment %} ── 6. Product variant parameter URLs ── {% endcomment %}
+{% if template contains 'product' %}
+  {% if request.url contains '?variant=' %}
+    <meta name="robots" content="noindex, follow">
+  {% endif %}
+{% endif %}
